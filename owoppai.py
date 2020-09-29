@@ -68,8 +68,7 @@ class Owoppai:
         self.output = {}
 
     async def __aenter__(self):
-        if not self.filename \
-        or not os.path.exists(self.filename):
+        if (not self.filename or not os.path.exists(self.filename)) and not self.try_osuapi():
             await plog(f'Could not find {self.filename}.', Ansi.LIGHT_RED)
             return
 
@@ -123,27 +122,19 @@ class Owoppai:
 
         await proc.wait() # wait for exit
 
-    @classmethod
-    async def from_md5(cls, md5: str, **kwargs):
-        # TODO: coming soon :P
-        raise NotImplementedError()
-
-    @classmethod
-    async def get_osuapi(cls, map_id: int, **kwargs):
+    async def try_osuapi(self) -> bool:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f'https://old.ppy.sh/osu/{map_id}') as r:
+            async with session.get(f'https://old.ppy.sh/osu/{self.map_id}') as r:
                 if not r or r.status != 200:
-                    await plog(f'Could not find map by id {map_id}!', Ansi.LIGHT_RED)
-                    return
+                    await plog(f'Could not find map by id {self.map_id}!', Ansi.LIGHT_RED)
+                    return False
 
                 content = await r.read()
 
-        filename = f'.data/osu/{map_id}.osu'
-
-        async with aiofiles.open(filename, 'wb') as f:
+        async with aiofiles.open(self.filename, 'wb') as f:
             await f.write(content)
 
-        return cls(map_id = map_id, **kwargs)
+        return True
 
     def _output(self, key: str, default):
         if key not in self.output:
