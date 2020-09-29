@@ -82,21 +82,29 @@ class Owoppai:
     async def calc(self) -> None:
         st = time.time()
         # perform the calculations using current state
-        args = [f'./oppai-ng/oppai {self.filename}']
+        args = [f'./pp/oppai {self.filename}']
 
         if self.mods > Mods.NOMOD:
             args.append(repr(self.mods))
+
         if self.combo:
             args.append(f'{self.combo}x')
+
         if self.nmiss:
             args.append(f'{self.nmiss}xM')
+
         if self.mode:
-            args.append(f'-m{int(self.mode)}')
-            if self.mode == GameMode.vn_taiko:
+            mode_vn = self.mode % 4
+            args.append(f'-m{mode_vn}')
+            if mode_vn == GameMode.vn_taiko:
                 args.append('-otaiko')
+
         if self.acc:
             args.append(f'{self.acc:.4f}%')
 
+        # XXX: could probably use binary to shave a bit
+        # of speed.. but in reality i should just write
+        # some bindings lmaoo this is so cursed overall
         args.append('-ojson')
 
         proc = await asyncio.create_subprocess_shell(
@@ -113,8 +121,7 @@ class Owoppai:
         if any(i not in output for i in important) or output['code'] != 200:
             await plog(f"oppai-ng error: {output['errstr']}", Ansi.LIGHT_RED)
 
-        await proc.wait()
-        print(f'{(time.time()-st)*1000}ms')
+        await proc.wait() # wait for exit
 
     @classmethod
     async def from_md5(cls, md5: str, **kwargs):
