@@ -4,6 +4,7 @@ tags
 *.tar.gz
 *.zip
 /oppai
+/oppai_old
 *.json
 *.obj
 *.exe

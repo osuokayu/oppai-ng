@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/Francesco149/oppai-ng.svg?branch=master)](https://travis-ci.org/Francesco149/oppai-ng)
-
-difficulty and pp calculator for osu!
+difficulty and pp calculator for osu!, with some modifications for [gulag](https://github.com/cmyui/gulag) (mostly relax support)
 
 this is a pure C89 rewrite of
 [oppai](https://github.com/Francesco149/oppai) with much lower
@@ -364,4 +362,3 @@ when you build the oppai cli, you can pass any of these parameters
 to the build script to disable features:
 
 * ```-DOPPAI_UTF8GRAPH``` use utf-8 characters for the strains graph
-
