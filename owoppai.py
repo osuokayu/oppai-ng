@@ -68,7 +68,7 @@ class Owoppai:
         self.output = {}
 
     async def __aenter__(self):
-        if (not self.filename or not os.path.exists(self.filename)) and not self.try_osuapi():
+        if (not self.filename or not os.path.exists(self.filename)) and not await self.try_osuapi():
             await plog(f'Could not find {self.filename}.', Ansi.LIGHT_RED)
             return
 
