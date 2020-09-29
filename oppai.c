@@ -2047,7 +2047,9 @@ int pp_std(ezpp_t ez) {
     0.4f * al_min(1.0f, nobjects_over_2k) +
     (ez->nobjects > 2000 ? (float)log10(nobjects_over_2k) * 0.5f : 0.0f)
   );
-  float miss_penality = (float)pow(0.97f, ez->nmiss);
+  float miss_penality = ez->mods & MODS_RX
+    ? (float)pow(0.97f, ez->nmiss + ez->n50 * 0.35f)
+    : (float)pow(0.97f, ez->nmiss);
   float combo_break = (
     (float)pow(ez->combo, 0.8f) / (float)pow(ez->max_combo, 0.8f)
   );
@@ -2093,14 +2095,18 @@ int pp_std(ezpp_t ez) {
   /* ar bonus -------------------------------------------------------- */
   ar_bonus = 1.0f;
 
-  /* high ar bonus */
-  if (ez->ar > 10.33f) {
-    ar_bonus += 0.3f * (ez->ar - 10.33f);
-  }
-
-  /* low ar bonus */
-  else if (ez->ar < 8.0f) {
-    ar_bonus += 0.01f * (8.0f - ez->ar);
+  if (ez->mods & MODS_RX) {
+    if (ez->ar > 10.67f) {
+      ar_bonus += pow(ez->ar - 10.67f, 1.75f);
+    } else if (ez->ar < 9.5f) {
+      ar_bonus += 0.05f * (9.5f - ez->ar);
+    }
+  } else {
+    if (ez->ar > 10.33f) {
+      ar_bonus += 0.3f * (ez->ar - 10.33f);
+    } else if (ez->ar < 8.0f) {
+      ar_bonus += 0.01f * (8.0f - ez->ar);
+    }
   }
 
   /* aim pp ---------------------------------------------------------- */
@@ -2113,7 +2119,9 @@ int pp_std(ezpp_t ez) {
   /* hidden */
   hd_bonus = 1.0f;
   if (ez->mods & MODS_HD) {
-    hd_bonus += 0.04f * (12.0f - ez->ar);
+    hd_bonus += ez->mods & MODS_RX
+      ? 0.05f * (11.0f - ez->ar)
+      : 0.04f * (12.0f - ez->ar);
   }
 
   ez->aim_pp *= hd_bonus;
@@ -2172,12 +2180,18 @@ int pp_std(ezpp_t ez) {
   if (ez->mods & MODS_NF) final_multiplier *= 0.90f;
   if (ez->mods & MODS_SO) final_multiplier *= 0.95f;
 
-  ez->pp = (float)(
-    pow(
-      pow(ez->aim_pp, 1.1f) +
-      pow(ez->speed_pp, 1.1f) +
-      pow(ez->acc_pp, 1.1f),
-      1.0f / 1.1f
+  ez->pp = (float)((ez->mods & MODS_RX
+    ? pow(
+        pow(ez->aim_pp, 1.1f) +
+        pow(ez->acc_pp, 1.1f),
+        1.0f / 1.1f
+      )
+    : pow(
+        pow(ez->aim_pp, 1.1f) +
+        pow(ez->speed_pp, 1.1f) +
+        pow(ez->acc_pp, 1.1f),
+        1.0f / 1.1f
+      )
     ) * final_multiplier
   );
 
