@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+# note: this is only meant for use in gulag,
+# i can't guarantee it'll work outside of that..
+# atleast for now B)
+
 import asyncio
 import aiofiles
 import aiohttp
@@ -13,39 +17,6 @@ from constants.mods import Mods
 from console import plog, Ansi
 
 __all__ = 'Owoppai',
-
-mod_strings = {
-    Mods.NOFAIL: 'NF',
-    Mods.EASY: 'EZ',
-    Mods.TOUCHSCREEN: 'TD',
-    Mods.HIDDEN: 'HD',
-    Mods.HARDROCK: 'HR',
-    Mods.SUDDENDEATH: 'SD',
-    Mods.DOUBLETIME: 'DT',
-    Mods.RELAX: 'RX',
-    Mods.HALFTIME: 'HT',
-    Mods.NIGHTCORE: 'NC',
-    Mods.FLASHLIGHT: 'FL',
-    Mods.AUTOPLAY: 'AU',
-    Mods.SPUNOUT: 'SO',
-    Mods.RELAX2: 'AP',
-    Mods.PERFECT: 'PF',
-    Mods.KEY4: 'K4',
-    Mods.KEY5: 'K5',
-    Mods.KEY6: 'K6',
-    Mods.KEY7: 'K7',
-    Mods.KEY8: 'K8',
-    Mods.KEYMOD: '??',
-    Mods.FADEIN: 'FI',
-    Mods.RANDOM: 'RD', # unsure
-    Mods.LASTMOD: 'LM', # unsure
-    Mods.KEY9: 'K9',
-    Mods.KEY10: 'K10', # unsure
-    Mods.KEY1: 'K1',
-    Mods.KEY3: 'K3',
-    Mods.KEY2: 'K2',
-    Mods.SCOREV2: 'V2'
-}
 
 class Owoppai:
     __slots__ = ('map_id', 'filename', 'mods',
@@ -94,6 +65,12 @@ class Owoppai:
 
         if self.mode:
             mode_vn = self.mode % 4
+
+            if mode_vn not in (0, 1):
+                # oppai-ng only supports std & taiko
+                self.output = {}
+                return
+
             args.append(f'-m{mode_vn}')
             if mode_vn == GameMode.vn_taiko:
                 args.append('-otaiko')
@@ -101,9 +78,9 @@ class Owoppai:
         if self.acc:
             args.append(f'{self.acc:.4f}%')
 
-        # XXX: could probably use binary to shave a bit
-        # of speed.. but in reality i should just write
-        # some bindings lmaoo this is so cursed overall
+        # XXX: could probably use binary to save a bit
+        # of time.. but in reality i should just write
+        # some bindings lmao this is so cursed overall
         args.append('-ojson')
 
         proc = await asyncio.create_subprocess_shell(
