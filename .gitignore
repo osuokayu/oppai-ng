@@ -20,5 +20,6 @@ tags
 /swig/python/oppai.egg-info
 /swig/python/build
 /swig/python/oppai.py
+/maps
 *.whl
 *.pyc
