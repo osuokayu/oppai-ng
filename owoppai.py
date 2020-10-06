@@ -64,7 +64,7 @@ class Owoppai:
             args.append(f'{self.nmiss}xM')
 
         if self.mode:
-            mode_vn = self.mode % 4
+            mode_vn = self.mode.as_vanilla
 
             if mode_vn not in (0, 1):
                 # oppai-ng only supports std & taiko
