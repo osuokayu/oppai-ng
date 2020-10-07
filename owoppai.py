@@ -40,7 +40,7 @@ class Owoppai:
 
     async def __aenter__(self):
         if (not self.filename or not os.path.exists(self.filename)) and not await self.try_osuapi():
-            await plog(f'Could not find {self.filename}.', Ansi.LIGHT_RED)
+            plog(f'Could not find {self.filename}.', Ansi.LRED)
             return
 
         await self.calc()
@@ -95,7 +95,7 @@ class Owoppai:
 
         important = ('code', 'errstr', 'pp', 'stars')
         if any(i not in output for i in important) or output['code'] != 200:
-            await plog(f"oppai-ng error: {output['errstr']}", Ansi.LIGHT_RED)
+            plog(f"oppai-ng error: {output['errstr']}", Ansi.LRED)
 
         await proc.wait() # wait for exit
 
@@ -103,7 +103,7 @@ class Owoppai:
         async with aiohttp.ClientSession() as session:
             async with session.get(f'https://old.ppy.sh/osu/{self.map_id}') as r:
                 if not r or r.status != 200:
-                    await plog(f'Could not find map by id {self.map_id}!', Ansi.LIGHT_RED)
+                    plog(f'Could not find map by id {self.map_id}!', Ansi.LRED)
                     return False
 
                 content = await r.read()
