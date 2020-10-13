@@ -100,8 +100,10 @@ class Owoppai:
         await proc.wait() # wait for exit
 
     async def try_osuapi(self) -> bool:
+        url = f'https://old.ppy.sh/osu/{self.map_id}'
+
         async with aiohttp.ClientSession() as session:
-            async with session.get(f'https://old.ppy.sh/osu/{self.map_id}') as r:
+            async with session.get(url) as r:
                 if not r or r.status != 200:
                     plog(f'Could not find map by id {self.map_id}!', Ansi.LRED)
                     return False
