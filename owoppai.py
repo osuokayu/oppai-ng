@@ -10,11 +10,10 @@ import aiohttp
 import orjson
 import os
 import time
+from cmyui import log, Ansi
 
 from constants.gamemodes import GameMode
 from constants.mods import Mods
-
-from console import plog, Ansi
 
 __all__ = 'Owoppai',
 
@@ -40,7 +39,7 @@ class Owoppai:
 
     async def __aenter__(self):
         if (not self.filename or not os.path.exists(self.filename)) and not await self.try_osuapi():
-            plog(f'Could not find {self.filename}.', Ansi.LRED)
+            log(f'Could not find {self.filename}.', Ansi.LRED)
             return
 
         await self.calc()
@@ -95,7 +94,7 @@ class Owoppai:
 
         important = ('code', 'errstr', 'pp', 'stars')
         if any(i not in output for i in important) or output['code'] != 200:
-            plog(f"oppai-ng error: {output['errstr']}", Ansi.LRED)
+            log(f"oppai-ng error: {output['errstr']}", Ansi.LRED)
 
         await proc.wait() # wait for exit
 
@@ -105,7 +104,7 @@ class Owoppai:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as r:
                 if not r or r.status != 200:
-                    plog(f'Could not find map by id {self.map_id}!', Ansi.LRED)
+                    log(f'Could not find map by id {self.map_id}!', Ansi.LRED)
                     return False
 
                 content = await r.read()
