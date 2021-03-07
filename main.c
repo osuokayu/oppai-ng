@@ -565,10 +565,11 @@ output_sig(output_binary) {
   int major, minor, patch;
   (void)mods_str;
 
+  /* breaks subprocess pipe?
   if (!freopen(0, "wb", stdout)) {
     perror("freopen");
     exit(1);
-  }
+  }*/
 
   printf("binoppai");
   oppai_version(&major, &minor, &patch);
@@ -687,7 +688,7 @@ output_module_t modules[] = {
   {
     "csv", output_csv,
     { "fieldname;value\n"
-    "one value per line. ';' characters in strings will be " 
+    "one value per line. ';' characters in strings will be "
     "escaped to \"\\;\". utf-8.\n" CODE_DESC, 0 }
   },
   {
@@ -963,4 +964,3 @@ output:
   ezpp_free(ez); /* just so valgrind stops crying */
   return result < 0;
 }
-
