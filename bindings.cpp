@@ -37,6 +37,31 @@ public:
         ezpp_set_nmiss(ez, nmiss);
     }
 
+    void set_mode(int mode)
+    {
+        ezpp_set_mode(ez, mode);
+    }
+
+    void set_mods(int mods)
+    {
+        ezpp_set_mods(ez, mods);
+    }
+
+    void set_nmiss(int nmiss)
+    {
+        ezpp_set_nmiss(ez, nmiss);
+    }
+
+    void set_combo(int combo)
+    {
+        ezpp_set_combo(ez, combo);
+    }
+
+    void set_accuracy_percent(float acc)
+    {
+        ezpp_set_accuracy_percent(ez, acc);
+    }
+
     void calculate(char* map_path)
     {
         ezpp(ez, map_path);
@@ -65,6 +90,11 @@ PYBIND11_MODULE(oppai, handle)
         .def("__enter__", &OppaiWrapper::enter)
         .def("__exit__", &OppaiWrapper::exit)
         .def("configure", &OppaiWrapper::configure, py::arg("mode"), py::arg("acc"), py::arg("mods"), py::arg("combo"), py::arg("nmiss"))
+        .def("set_mode", &OppaiWrapper::set_mode)
+        .def("set_mods", &OppaiWrapper::set_mods)
+        .def("set_nmiss", &OppaiWrapper::set_nmiss)
+        .def("set_combo", &OppaiWrapper::set_combo)
+        .def("set_accuracy_percent", &OppaiWrapper::set_accuracy_percent)
         .def("calculate", &OppaiWrapper::calculate)
         .def("calculate_data", &OppaiWrapper::calculate_data)
         .def("get_pp", &OppaiWrapper::get_pp)
