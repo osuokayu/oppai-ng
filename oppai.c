@@ -38,40 +38,40 @@ OPPAIAPI float ezpp_pp(ezpp_t ez);
 OPPAIAPI float ezpp_stars(ezpp_t ez);
 
 /*
- * the above is all you need for basic usage. below are some advanced api's
- * and usage examples
- *
- * - if map is "-" the map is read from standard input
- * - you can use ezpp_data if you already have raw beatmap data in memory
- * - if autocalc is set to 1, the results will be automatically refreshed
- *   when you change parameters. if reparsing is required, the last passed
- *   map or map data will be used
- * - if map is 0 (NULL), difficulty calculation and map parsing are skipped
- *   and you must set at least mode, aim_stars, speed_stars, nobjects,
- *   base_ar, base_od, max_combo, nsliders, ncircles
- * - if aim_stars or speed_stars are set difficulty calculation is also
- *   skipped but values are taken from map
- * - setting mods or cs resets aim_stars and speed_stars, set those last
- * = setting end resets accuracy_percent
- * - if mode_override is set, std maps are converted to other modes
- * - mode defaults to MODE_STD or the map's mode
- * - mods default to MODS_NOMOD
- * - combo defaults to full combo
- * - nmiss defaults to 0
- * - score_version defaults to scorev1
- * - if accuracy_percent is set, n300/100/50 are automatically
- *   calculated and stored
- * - if n300/100/50 are set, accuracy_percent is automatically
- *   calculated and stored
- * - if none of the above are set, SS (100%) is assumed
- * - if end is set, the map will be cut to this object index
- * - if base_ar/od/cs are set, they will override the map's values
- * - when you change map and you're reusing the handle, you should reset
- *   ar/od/cs/hp to -1 otherwise it will override them with the previous
- *   map's values
- * - in autocalc mode, calling ezpp with a non-NULL map always resets
- *   ar/od/cs/hp overrides to -1 so you don't have to
- */
+* the above is all you need for basic usage. below are some advanced api's
+* and usage examples
+*
+* - if map is "-" the map is read from standard input
+* - you can use ezpp_data if you already have raw beatmap data in memory
+* - if autocalc is set to 1, the results will be automatically refreshed
+*   when you change parameters. if reparsing is required, the last passed
+*   map or map data will be used
+* - if map is 0 (NULL), difficulty calculation and map parsing are skipped
+*   and you must set at least mode, aim_stars, speed_stars, nobjects,
+*   base_ar, base_od, max_combo, nsliders, ncircles
+* - if aim_stars or speed_stars are set difficulty calculation is also
+*   skipped but values are taken from map
+* - setting mods or cs resets aim_stars and speed_stars, set those last
+* = setting end resets accuracy_percent
+* - if mode_override is set, std maps are converted to other modes
+* - mode defaults to MODE_STD or the map's mode
+* - mods default to MODS_NOMOD
+* - combo defaults to full combo
+* - nmiss defaults to 0
+* - score_version defaults to scorev1
+* - if accuracy_percent is set, n300/100/50 are automatically
+*   calculated and stored
+* - if n300/100/50 are set, accuracy_percent is automatically
+*   calculated and stored
+* - if none of the above are set, SS (100%) is assumed
+* - if end is set, the map will be cut to this object index
+* - if base_ar/od/cs are set, they will override the map's values
+* - when you change map and you're reusing the handle, you should reset
+*   ar/od/cs/hp to -1 otherwise it will override them with the previous
+*   map's values
+* - in autocalc mode, calling ezpp with a non-NULL map always resets
+*   ar/od/cs/hp overrides to -1 so you don't have to
+*/
 
 OPPAIAPI void ezpp_set_autocalc(ezpp_t ez, int autocalc);
 OPPAIAPI int ezpp_autocalc(ezpp_t ez);
@@ -131,20 +131,20 @@ OPPAIAPI void ezpp_set_end(ezpp_t ez, int end);
 OPPAIAPI void ezpp_set_end_time(ezpp_t ez, float end);
 
 /*
- * these will make a copy of mapfile/data and free it automatically. this
- * is slow but useful when working with bindings in other langs where
- * pointers to strings aren't guaranteed to persist like python3
- */
+* these will make a copy of mapfile/data and free it automatically. this
+* is slow but useful when working with bindings in other langs where
+* pointers to strings aren't guaranteed to persist like python3
+*/
 OPPAIAPI int ezpp_dup(ezpp_t ez, char* mapfile);
 OPPAIAPI int ezpp_data_dup(ezpp_t ez, char* data, int data_size);
 
 /* errors -------------------------------------------------------------- */
 
 /*
- * all functions that return int can return errors in the form
- * of a negative value. check if the return value is < 0 and call
- * errstr to get the error message
- */
+* all functions that return int can return errors in the form
+* of a negative value. check if the return value is < 0 and call
+* errstr to get the error message
+*/
 
 #define ERR_MORE (-1)
 #define ERR_SYNTAX (-2)
@@ -382,12 +382,12 @@ int slice_len(slice_t* s) {
 }
 
 /*
- * splits s at any of the separators in separator_list and stores
- * pointers to the strings in arr.
- * returns the number of elements written to arr.
- * if more elements than nmax are found, err is set to
- * ERR_TRUNCATED
- */
+* splits s at any of the separators in separator_list and stores
+* pointers to the strings in arr.
+* returns the number of elements written to arr.
+* if more elements than nmax are found, err is set to
+* ERR_TRUNCATED
+*/
 int slice_split(slice_t* s, char* separator_list, slice_t* arr,
   int nmax, int* err)
 {
@@ -527,10 +527,10 @@ typedef struct object {
 } object_t;
 
 /*
- * exposing the struct would cut down lines of code but makes it harder
- * to use from langs that aren't c/c++ or don't have the same memory
- * alignment etc
- */
+* exposing the struct would cut down lines of code but makes it harder
+* to use from langs that aren't c/c++ or don't have the same memory
+* alignment etc
+*/
 
 #define AUTOCALC_BIT (1<<0)
 #define OWNS_MAP_BIT (1<<1) /* map/data freed on ezpp{,_data}, ezpp_free */
@@ -654,9 +654,9 @@ float od_ms_step[] = { 6.0f, 3.0f };
 #define AR_MS_STEP2 150.f /* ar5-10 */
 
 /*
- * stats must be capped to 0-10 before HT/DT which brings them to a range
- * of -4.42f to 11.08f for OD and -5 to 11 for AR
- */
+* stats must be capped to 0-10 before HT/DT which brings them to a range
+* of -4.42f to 11.08f for OD and -5 to 11 for AR
+*/
 
 int mods_apply(ezpp_t ez) {
   float od_ar_hp_multiplier, cs_multiplier, arms;
@@ -719,13 +719,13 @@ int mods_apply(ezpp_t ez) {
 /* beatmap parser ------------------------------------------------------ */
 
 /*
- * comments in beatmaps can only be an entire line because
- * some properties such as author can contain //
- *
- * all p_* functions expect s to be a single line and trimmed
- * on errors, p_* functions return < 0 error codes otherwise they
- * return n bytes consumed
- */
+* comments in beatmaps can only be an entire line because
+* some properties such as author can contain //
+*
+* all p_* functions expect s to be a single line and trimmed
+* on errors, p_* functions return < 0 error codes otherwise they
+* return n bytes consumed
+*/
 
 #define P_OVERRIDE_MODE (1<<0) /* mode_override */
 #define P_FOUND_AR (1<<1)
@@ -904,11 +904,11 @@ int p_difficulty(ezpp_t ez, slice_t* line) {
 }
 
 /*
- * time, ms_per_beat, time_signature_id, sample_set_id,
- * sample_bank_id, sample_volume, is_timing_change, effect_flags
- *
- * everything after ms_per_beat is optional
- */
+* time, ms_per_beat, time_signature_id, sample_set_id,
+* sample_bank_id, sample_volume, is_timing_change, effect_flags
+*
+* everything after ms_per_beat is optional
+*/
 int p_timing(ezpp_t ez, slice_t* line) {
   int res = 0;
   int n, i;
@@ -1030,9 +1030,9 @@ int p_objects(ezpp_t ez, slice_t* line) {
   }
 
   /*
-   * x,y,time,type,sound_type,points,repetitions,distance,
-   * per_node_sounds,per_node_samples,custom_sample_banks
-   */
+  * x,y,time,type,sound_type,points,repetitions,distance,
+  * per_node_sounds,per_node_samples,custom_sample_banks
+  */
   else if (o->type & OBJ_SLIDER) {
     ++ez->nsliders;
     if (ne < 7) {
@@ -1060,11 +1060,11 @@ int p_objects(ezpp_t ez, slice_t* line) {
       int sound_type = o->sound_types[0];
 
       /*
-       * TODO: there's probably something subtly wrong with this.
-       * sometimes we get less sound types than nodes
-       * also I don't know if I'm supposed to include the previous
-       * sound type from the single sound_type field
-       */
+      * TODO: there's probably something subtly wrong with this.
+      * sometimes we get less sound types than nodes
+      * also I don't know if I'm supposed to include the previous
+      * sound type from the single sound_type field
+      */
 
       /* repeats + head and tail. no repeats is 0 repetition */
       nodes = o->repetitions + 1;
@@ -1246,20 +1246,20 @@ void p_end(ezpp_t ez) {
   }
 
   /*
-   * sliders get 2 + ticks combo (head, tail and ticks) each repetition adds
-   * an extra combo and an extra set of ticks
-   *
-   * calculate the number of slider ticks for one repetition
-   * ---
-   * example: a 3.75f beats slider at 1x tick rate will go:
-   * beat0 (head), beat1 (tick), beat2(tick), beat3(tick),
-   * beat3.75f(tail)
-   * so all we have to do is ceil the number of beats and subtract 1 to take
-   * out the tail
-   * ---
-   * the -0.1f is there to prevent ceil from ceiling whole values like 1.0f to
-   * 2.0f randomly
-   */
+  * sliders get 2 + ticks combo (head, tail and ticks) each repetition adds
+  * an extra combo and an extra set of ticks
+  *
+  * calculate the number of slider ticks for one repetition
+  * ---
+  * example: a 3.75f beats slider at 1x tick rate will go:
+  * beat0 (head), beat1 (tick), beat2(tick), beat3(tick),
+  * beat3.75f(tail)
+  * so all we have to do is ceil the number of beats and subtract 1 to take
+  * out the tail
+  * ---
+  * the -0.1f is there to prevent ceil from ceiling whole values like 1.0f to
+  * 2.0f randomly
+  */
 
   ez->nobjects = ez->objects.len;
   ez->max_combo = ez->nobjects;
@@ -1270,11 +1270,11 @@ void p_end(ezpp_t ez) {
   }
 
   /*
-   * positions are normalized on circle radius so that we
-   * can calc as if everything was the same circlesize
-   * this should really be in diffcalc functions but putting it here
-   * makes it so that i only traverse the hitobjects twice in total
-   */
+  * positions are normalized on circle radius so that we
+  * can calc as if everything was the same circlesize
+  * this should really be in diffcalc functions but putting it here
+  * makes it so that i only traverse the hitobjects twice in total
+  */
   radius = (
     (PLAYFIELD_WIDTH / 16.0f) *
     (1.0f - 0.7f * ((float)ez->cs - 5.0f) / 5.0f)
@@ -1366,9 +1366,9 @@ void p_end(ezpp_t ez) {
         ticks += o->repetitions + 1; /* add heads and tails */
 
         /*
-         * actually doesn't include first head because we already
-         * added it by setting res = nobjects
-         */
+        * actually doesn't include first head because we already
+        * added it by setting res = nobjects
+        */
         ez->max_combo += al_max(0, ticks - 1);
         break;
     }
@@ -1495,10 +1495,10 @@ float decay_base[] = { 0.3f, 0.15f }; /* strains decay per interval */
 float weight_scaling[] = { 1400.0f, 26.25f }; /* balances aim/speed */
 
 /*
- * TODO: unbloat these params
- * this function has become a mess with the latest changes, I should split
- * it into separate funcs for speed and im
- */
+* TODO: unbloat these params
+* this function has become a mess with the latest changes, I should split
+* it into separate funcs for speed and im
+*/
 float d_spacing_weight(float distance, float delta_time,
   float prev_distance, float prev_delta_time,
   float angle, int type, int* is_single)
@@ -1652,9 +1652,9 @@ int d_calc_individual(ezpp_t ez, int type) {
   int i;
 
   /*
-   * the first object doesn't generate a strain,
-   * so we begin with an incremented interval end
-   */
+  * the first object doesn't generate a strain,
+  * so we begin with an incremented interval end
+  */
   ez->max_strain = 0.0f;
   ez->interval_end = (
     (float)ceil(ez->objects.data[0].time / (STRAIN_STEP * ez->speed_mul))
@@ -1681,9 +1681,9 @@ int d_calc_individual(ezpp_t ez, int type) {
   }
 
   /*
-   * the peak strain will not be saved for
-   * the last section in the above loop
-   */
+  * the peak strain will not be saved for
+  * the last section in the above loop
+  */
   if (!array_append(&ez->highest_strains, ez->max_strain)) {
     return ERR_OOM;
   }
@@ -1748,10 +1748,10 @@ typedef struct taiko_object {
   int rim;
   int same_since; /* streak of hits of the same type (rim/center) */
   /*
-   * was the last hit type change at an even same_since count?
-   * -1 if there is no previous switch (for example if the
-   * previous object was not a hit
-   */
+  * was the last hit type change at an even same_since count?
+  * -1 if there is no previous switch (for example if the
+  * previous object was not a hit
+  */
   int last_switch_even;
 } taiko_object_t;
 
@@ -1790,9 +1790,9 @@ float taiko_rhythm_bonus(taiko_object_t* cur, taiko_object_t* prev) {
   diff = (float)fmod(log(ratio) / log(TAIKO_RHYTHM_CHANGE_BASE), 1.0f);
 
   /*
-   * threshold that determines whether the rhythm changed enough
-   * to be worthy of the bonus
-   */
+  * threshold that determines whether the rhythm changed enough
+  * to be worthy of the bonus
+  */
   if (diff > TAIKO_RHYTHM_CHANGE_BASE_THRESHOLD &&
     diff < 1 - TAIKO_RHYTHM_CHANGE_BASE_THRESHOLD)
   {
@@ -1810,9 +1810,9 @@ void taiko_strain(taiko_object_t* cur, taiko_object_t* prev) {
   decay = (float)pow(decay_base[0], cur->time_elapsed / 1000.0f);
 
   /*
-   * we only have strains for hits, also ignore objects that are
-   * more than 1 second apart
-   */
+  * we only have strains for hits, also ignore objects that are
+  * more than 1 second apart
+  */
   if (prev->hit && cur->hit && cur->time - prev->time < 1000.0f) {
     addition += taiko_change_bonus(cur, prev);
     addition += taiko_rhythm_bonus(cur, prev);
@@ -1846,10 +1846,10 @@ int d_taiko(ezpp_t ez) {
   ez->interval_end = STRAIN_STEP * ez->speed_mul;
 
   /*
-   * TODO: separate taiko conversion into its own function
-   * so that it can be reused? probably slower, but cleaner,
-   * more modular and more readable
-   */
+  * TODO: separate taiko conversion into its own function
+  * so that it can be reused? probably slower, but cleaner,
+  * more modular and more readable
+  */
   for (i = 0; i < ez->nobjects; ++i) {
     object_t* o = &ez->objects.data[i];
 
@@ -1886,12 +1886,12 @@ int d_taiko(ezpp_t ez) {
       }
 
       /*
-       * sliders that meet the requirements will
-       * become streams of the slider's tick rate
-       */
+      * sliders that meet the requirements will
+      * become streams of the slider's tick rate
+      */
       for (j = o->time;
-           j < o->time + o->duration + o->tick_spacing / 8;
-           j += o->tick_spacing)
+          j < o->time + o->duration + o->tick_spacing / 8;
+          j += o->tick_spacing)
       {
         int sound_type = o->sound_types[isound];
         cur->rim = (sound_type & (SOUND_CLAP | SOUND_WHISTLE)) != 0;
@@ -1924,10 +1924,10 @@ int d_taiko(ezpp_t ez) {
       }
 
       /*
-       * since we processed the slider as multiple hits,
-       * we must skip the prev/cur swap which we already did
-       * in the above loop
-       */
+      * since we processed the slider as multiple hits,
+      * we must skip the prev/cur swap which we already did
+      * in the above loop
+      */
       continue;
     }
 
@@ -2073,9 +2073,9 @@ int pp_std(ezpp_t ez) {
   accuracy = acc_calc(ez->n300, ez->n100, ez->n50, ez->nmiss);
 
   /*
-   * scorev1 ignores sliders and spinners since they are free 300s
-   * can go negative if we miss everything so we must clamp it
-   */
+  * scorev1 ignores sliders and spinners since they are free 300s
+  * can go negative if we miss everything so we must clamp it
+  */
 
   switch (ez->score_version) {
     case 1:
