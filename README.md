@@ -2,12 +2,7 @@ difficulty and pp calculator for osu!, with some modifications for [gulag](https
 
 this is a wrapper around the actual oppai-ng implementation you can view [here](https://github.com/Francesco149/oppai-ng)
 
-to build, all you have to do is run
-
-```
-cmake .
-make
-```
+to build, all you have to do is run `./build`
 
 and then move the pyd/so file (OS-dependent) file to wherever you would like to import from.
 
