@@ -31,10 +31,10 @@ public:
 
         // clobber so these orders matter
         ezpp_set_mode(ez, mode);
-        ezpp_set_accuracy_percent(ez, acc);
         ezpp_set_mods(ez, mods);
-        ezpp_set_combo(ez, combo);
         ezpp_set_nmiss(ez, nmiss);
+        ezpp_set_combo(ez, combo);
+        ezpp_set_accuracy_percent(ez, acc);
     }
 
     void set_mode(int mode)
