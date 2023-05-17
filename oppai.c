@@ -2159,7 +2159,7 @@ int pp_std(ezpp_t ez) {
   ez->speed_pp *= hd_bonus;
 
   /* scale the speed value with accuracy slightly */
-  ez->speed_pp *= 0.03f + accuracy;
+  ez->speed_pp *= 0.022f + accuracy;
 
   /* it's important to also consider accuracy difficulty when doing that */
   ez->speed_pp *= 0.96f + (od_squared / 1600.0f);
@@ -2198,9 +2198,9 @@ int pp_std(ezpp_t ez) {
   } else {
     ez->pp = (float)pow(
     /* aim, speed & acc */
-      pow(ez->aim_pp, 1.12f) +
-      pow(ez->speed_pp, 1.12f) +
-      pow(ez->acc_pp, 1.13f),
+      pow(ez->aim_pp, 1.11f) +
+      pow(ez->speed_pp, 1.11f) +
+      pow(ez->acc_pp, 1.12f),
       1.0f / 1.1f
     );
   }
