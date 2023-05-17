@@ -2043,7 +2043,7 @@ int pp_std(ezpp_t ez) {
   int ncircles = ez->ncircles;
   float nobjects_over_2k = ez->nobjects / 2000.0f;
   float length_bonus = (
-    0.98f +
+    0.96f +
     0.4f * al_min(1.0f, nobjects_over_2k) +
     (ez->nobjects > 2000 ? (float)log10(nobjects_over_2k) * 0.5f : 0.0f)
   );
@@ -2130,7 +2130,7 @@ int pp_std(ezpp_t ez) {
   if (ez->mods & MODS_FL) {
     float fl_bonus = 1.0f + 0.35f * al_min(1.0f, ez->nobjects / 200.0f);
     if (ez->nobjects > 200) {
-      fl_bonus += 0.4f * al_min(1, (ez->nobjects - 200) / 300.0f);
+      fl_bonus += 0.33f * al_min(1, (ez->nobjects - 200) / 300.0f);
     }
     if (ez->nobjects > 500) {
       fl_bonus += (ez->nobjects - 500) / 1200.0f;
@@ -2159,7 +2159,7 @@ int pp_std(ezpp_t ez) {
   ez->speed_pp *= hd_bonus;
 
   /* scale the speed value with accuracy slightly */
-  ez->speed_pp *= 0.022f + accuracy;
+  ez->speed_pp *= 0.021f + accuracy;
 
   /* it's important to also consider accuracy difficulty when doing that */
   ez->speed_pp *= 0.96f + (od_squared / 1600.0f);
@@ -2198,9 +2198,9 @@ int pp_std(ezpp_t ez) {
   } else {
     ez->pp = (float)pow(
     /* aim, speed & acc */
-      pow(ez->aim_pp, 1.11f) +
-      pow(ez->speed_pp, 1.11f) +
-      pow(ez->acc_pp, 1.12f),
+      pow(ez->aim_pp, 1.1f) +
+      pow(ez->speed_pp, 1.1f) +
+      pow(ez->acc_pp, 1.1f),
       1.0f / 1.1f
     );
   }
