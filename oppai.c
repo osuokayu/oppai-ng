@@ -2043,13 +2043,13 @@ int pp_std(ezpp_t ez) {
   int ncircles = ez->ncircles;
   float nobjects_over_2k = ez->nobjects / 2000.0f;
   float length_bonus = (
-    1.15f +
+    1.19f +
     0.4f * al_min(1.0f, nobjects_over_2k) +
     (ez->nobjects > 2000 ? (float)log10(nobjects_over_2k) * 0.5f : 0.0f)
   );
   float miss_penality = ez->mods & MODS_RX
-    ? (float)pow(0.9f, ez->nmiss + ez->n50 * 0.35f)
-    : (float)pow(0.9f, ez->nmiss);
+    ? (float)pow(0.94f, ez->nmiss + ez->n50 * 0.35f)
+    : (float)pow(0.94f, ez->nmiss);
   float combo_break = (
     (float)pow(ez->combo, 0.8f) / (float)pow(ez->max_combo, 0.8f)
   );
@@ -2120,8 +2120,8 @@ int pp_std(ezpp_t ez) {
   hd_bonus = 1.0f;
   if (ez->mods & MODS_HD) {
     hd_bonus += ez->mods & MODS_RX
-      ? 0.07f * (11.0f - ez->ar)
-      : 0.06f * (12.0f - ez->ar);
+      ? 0.05f * (11.0f - ez->ar)
+      : 0.04f * (12.0f - ez->ar);
   }
 
   ez->aim_pp *= hd_bonus;
