@@ -2198,9 +2198,9 @@ int pp_std(ezpp_t ez) {
   } else {
     ez->pp = (float)pow(
     /* aim, speed & acc */
-      pow(ez->aim_pp, 1.06f) +
-      pow(ez->speed_pp, 1.05f) +
-      pow(ez->acc_pp, 1.07f),
+      pow(ez->aim_pp, 1.1f) +
+      pow(ez->speed_pp, 1.1f) +
+      pow(ez->acc_pp, 1.1f),
       1.0f / 1.1f
     );
   }
