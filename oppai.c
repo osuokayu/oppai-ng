@@ -686,7 +686,7 @@ int mods_apply(ezpp_t ez) {
 
   /* global multipliers */
   od_ar_hp_multiplier = 1;
-  if (ez->mods & MODS_HR) od_ar_hp_multiplier *= 1.4f;
+  if (ez->mods & MODS_HR) od_ar_hp_multiplier *= 1.55f;
   if (ez->mods & MODS_EZ) od_ar_hp_multiplier *= 0.5f;
 
   ez->od *= od_ar_hp_multiplier;
@@ -706,7 +706,7 @@ int mods_apply(ezpp_t ez) {
     : (5 + (AR5_MS - arms) / AR_MS_STEP2);
 
   cs_multiplier = 1;
-  if (ez->mods & MODS_HR) cs_multiplier = 1.3f;
+  if (ez->mods & MODS_HR) cs_multiplier = 1.35f;
   if (ez->mods & MODS_EZ) cs_multiplier = 0.5f;
   ez->cs *= cs_multiplier;
   ez->cs = al_max(0.0f, al_min(10.0f, ez->cs));
