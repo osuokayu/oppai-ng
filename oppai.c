@@ -2143,7 +2143,7 @@ int pp_std(ezpp_t ez) {
 
   /* od bonus (high od requires better aim timing to acc) */
   od_squared = (float)pow(ez->od, 2);
-  od_bonus = 0.98f + od_squared / 2500.0f;
+  od_bonus = 0.97f + od_squared / 2500.0f;
 
   ez->aim_pp *= acc_bonus;
   ez->aim_pp *= od_bonus;
@@ -2162,7 +2162,7 @@ int pp_std(ezpp_t ez) {
   ez->speed_pp *= 0.021f + accuracy;
 
   /* it's important to also consider accuracy difficulty when doing that */
-  ez->speed_pp *= 0.96f + (od_squared / 1600.0f);
+  ez->speed_pp *= 0.97f + (od_squared / 1600.0f);
 
   /* acc pp ---------------------------------------------------------- */
   /* arbitrary values tom crafted out of trial and error */
@@ -2183,10 +2183,10 @@ int pp_std(ezpp_t ez) {
   if (ez->mods & MODS_RX) {
     /* aim & acc */
     ez->pp = (float)pow(
-      pow(ez->aim_pp, 1.13f) +
-      pow(ez->acc_pp, 1.15f) +
-      pow(ez->speed_pp, 0.83f),
-      1.0f / 1.1f
+      pow(ez->aim_pp, 1.16f) +
+      pow(ez->acc_pp, 1.14f) +
+      pow(ez->speed_pp, 0.45f),
+      1.0f / 1.115f
     );
   } else if (ez->mods & MODS_AP) {
     /* speed & acc */
@@ -2198,9 +2198,9 @@ int pp_std(ezpp_t ez) {
   } else {
     ez->pp = (float)pow(
     /* aim, speed & acc */
-      pow(ez->aim_pp, 1.1f) +
-      pow(ez->speed_pp, 1.1f) +
-      pow(ez->acc_pp, 1.1f),
+      pow(ez->aim_pp, 1.11f) +
+      pow(ez->speed_pp, 1.11f) +
+      pow(ez->acc_pp, 1.11f),
       1.0f / 1.1f
     );
   }
